@@ -1,28 +1,27 @@
-name: CI/CD for Nginx
+name: Deploy Nginx Configuration
 
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Test Nginx Configuration
-        run: docker run --rm -v ${{ github.workspace }}/nginx:/etc/nginx:ro nginx:alpine nginx -t -c /etc/nginx/nginx.conf
-
   deploy:
     runs-on: ubuntu-latest
-    needs: test
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Deploy Nginx Configuration
-        env:
-          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Copy Nginx Configuration
         run: |
-          sudo apt-get update -y
-          sudo apt-get install -y sshpass
-          sshpass -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no -r nginx/* user@yourserver:/etc/nginx/
-          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no user@yourserver 'sudo systemctl reload nginx'
+          scp -r nginx/sites-available/*.conf user@your_server:/etc/nginx/sites-available/
+
+      - name: Deploy Configuration
+        run: |
+          ssh user@your_server "bash -s" < scripts/deploy.sh your_site_name.conf
