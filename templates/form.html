@@ -1,23 +1,94 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nginx Configuration Generator</title>
+    <title>Nginx Config Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #32CD32, #000000, #FFD700);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            color: #333;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #555;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            width: calc(50% - 10px);
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+        .logo {
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+        }
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Generate Nginx Configuration</h1>
-    <form action="/generate" method="POST">
-        <label for="dns_name">DNS Name:</label>
-        <input type="text" id="dns_name" name="dns_name" required><br>
-
-        <label for="ip_address">IP Address:</label>
-        <input type="text" id="ip_address" name="ip_address" required><br>
-
-        <label for="port">Port:</label>
-        <input type="text" id="port" name="port" required><br>
-
-        <button type="submit">Generate</button>
-    </form>
+    <div class="container">
+        <div class="logo-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Nginx_logo.svg" alt="Nginx Logo" class="logo">
+            <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" class="logo">
+        </div>
+        <h1>Nginx Config Generator</h1>
+        <form action="/generate" method="post">
+            <label for="dns_name">DNS Name:</label>
+            <input type="text" id="dns_name" name="dns_name" placeholder="Enter DNS Name" required><br>
+            <label for="ip_address">IP Address:</label>
+            <input type="text" id="ip_address" name="ip_address" placeholder="Enter IP Address" required><br>
+            <label for="port">Port:</label>
+            <input type="text" id="port" name="port" placeholder="Enter Port" required><br>
+            <label for="commit_message">Commit Message:</label>
+            <input type="text" id="commit_message" name="commit_message" placeholder="Enter Commit Message" required><br>
+            <input type="submit" name="action" value="Generate Config">
+            <input type="submit" name="action" value="Generate and Push">
+        </form>
+    </div>
 </body>
 </html>
